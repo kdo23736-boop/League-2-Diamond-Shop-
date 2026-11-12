@@ -1,1 +1,222 @@
 
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>League 2 Diamond Shop</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#0b0712;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+.container{max-width:750px;margin:auto;padding:20px}
+header{text-align:center;padding:25px 5px}
+.logo{
+ background:linear-gradient(135deg,#a855f7,#5b21b6);
+ width:65px;height:65px;border-radius:20px;
+ display:grid;place-items:center;
+ margin:auto;font-size:25px;font-weight:bold
+}
+h1{font-size:25px}
+.sub{color:#b9abc9}
+.card{
+ background:#171023;border:1px solid #39264f;
+ border-radius:15px;padding:16px;margin:15px 0
+}
+h2{font-size:18px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tab{
+ background:#211431;color:white;border:1px solid #49345f;
+ padding:10px;border-radius:10px;cursor:pointer
+}
+.tab.active{background:#8b45dc}
+.products{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px;
+ margin-top:15px
+}
+.product{
+ background:#211431;color:white;border:1px solid #49345f;
+ border-radius:12px;padding:13px;text-align:left;cursor:pointer
+}
+.product.selected{border:2px solid #c084fc}
+.price{color:#d7a8ff;font-weight:bold;margin-top:8px}
+label{display:block;margin:12px 0 7px}
+input{
+ width:100%;padding:13px;border-radius:10px;
+ background:#0e0a16;color:white;border:1px solid #49345f
+}
+.pay{
+ background:#211431;padding:12px;
+ border-radius:10px;margin:10px 0
+}
+button.submit{
+ width:100%;padding:15px;border:0;border-radius:12px;
+ background:linear-gradient(100deg,#9b5cff,#c15cff);
+ color:white;font-weight:bold;font-size:16px;
+ margin-top:15px;cursor:pointer
+}
+.summary{display:flex;justify-content:space-between;margin:12px 0}
+.note{color:#b9abc9;font-size:12px;line-height:1.6}
+#status{color:#d7a8ff;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+ <div class="logo">L2</div>
+ <h1>LEAGUE 2 DIAMOND SHOP</h1>
+ <div class="sub">Mobile Legends Diamond Service</div>
+</header>
+
+<div class="card">
+<h2>၁။ Package ရွေးချယ်ပါ</h2>
+
+<div class="tabs">
+ <button class="tab active" onclick="show('diamond',this)">Normal Diamond</button>
+ <button class="tab" onclick="show('pass',this)">Pass</button>
+ <button class="tab" onclick="show('double',this)">Double Diamond</button>
+</div>
+
+<div class="products" id="products"></div>
+</div>
+
+<div class="card">
+<h2>၂။ MLBB Account Information</h2>
+
+<label>User ID</label>
+<input id="uid" placeholder="MLBB User ID">
+
+<label>Server ID</label>
+<input id="sid" placeholder="Server ID">
+</div>
+
+<div class="card">
+<h2>၃။ Payment</h2>
+
+<div class="pay">
+ KPay: 09422190218
+</div>
+
+<div class="pay">
+ WavePay: 09893463559
+</div>
+
+<label>Payment Screenshot</label>
+<input type="file" id="receipt" accept="image/*">
+
+<p class="note">
+ငွေလွှဲပြီးပါက Screenshot တင်ပေးပါ။
+Admin မှ စစ်ဆေးအတည်ပြုပေးပါမည်။
+</p>
+</div>
+
+<div class="card">
+<h2>Order Summary</h2>
+
+<div class="summary">
+<span>Package</span>
+<b id="pname">မရွေးရသေးပါ</b>
+</div>
+
+<div class="summary">
+<span>Total</span>
+<b id="total">0 Ks</b>
+</div>
+
+<button class="submit" onclick="order()">
+Order တင်မည်
+</button>
+
+<div id="status"></div>
+</div>
+
+</div>
+
+<script>
+const data={
+diamond:[
+["86 Diamonds",5800],
+["172 Diamonds",11000],
+["257 Diamonds",16300],
+["343 Diamonds",21800],
+["429 Diamonds",27000],
+["514 Diamonds",32500],
+["600 Diamonds",37600],
+["706 Diamonds",42900],
+["878 Diamonds",53600],
+["964 Diamonds",58900],
+["1049 Diamonds",64100],
+["2195 Diamonds",127500]
+],
+pass:[
+["Weekly Pass",6900],
+["Twilight Pass",34500]
+],
+double:[
+["2X 50 Diamonds",4100],
+["2X 150 Diamonds",11500],
+["2X 250 Diamonds",17200],
+["2X 500 Diamonds",33700]
+]
+};
+
+let selected=null;
+
+function show(type,btn){
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ btn.classList.add("active");
+ selected=null;
+ update();
+ const box=document.getElementById("products");
+ box.innerHTML="";
+ data[type].forEach(item=>{
+  const b=document.createElement("button");
+  b.className="product";
+  b.innerHTML=`<b>${item[0]}</b><div class="price">${item[1].toLocaleString()} Ks</div>`;
+  b.onclick=()=>{
+   selected=item;
+   document.querySelectorAll(".product").forEach(x=>x.classList.remove("selected"));
+   b.classList.add("selected");
+   update();
+  };
+  box.appendChild(b);
+ });
+}
+
+function update(){
+ document.getElementById("pname").innerText=selected?selected[0]:"မရွေးရသေးပါ";
+ document.getElementById("total").innerText=selected?selected[1].toLocaleString()+" Ks":"0 Ks";
+}
+
+function order(){
+ const uid=document.getElementById("uid").value.trim();
+ const sid=document.getElementById("sid").value.trim();
+ const receipt=document.getElementById("receipt").files[0];
+ const status=document.getElementById("status");
+
+ if(!selected){
+  status.innerText="Package ရွေးချယ်ပါ။";
+  return;
+ }
+ if(!uid||!sid){
+  status.innerText="User ID နှင့် Server ID ဖြည့်ပါ။";
+  return;
+ }
+ if(!receipt){
+  status.innerText="Payment Screenshot တင်ပေးပါ။";
+  return;
+ }
+
+ status.innerText="အချက်အလက်ပြည့်စုံပါပြီ။ Backend ချိတ်ဆက်ရန် လိုအပ်ပါသည်။";
+}
+
+show("diamond",document.querySelector(".tab"));
+</script>
+</body>
+</html>
+
