@@ -6,111 +6,135 @@
 }
 
 body {
-  background: #0b0712;
-  color: white;
+  background: #090711;
+  color: #fff;
   font-family: Arial, sans-serif;
 }
 
-.container {
-  max-width: 750px;
-  margin: auto;
-  padding: 20px;
-}
-
-header {
+.header {
   text-align: center;
-  padding: 25px 5px;
+  padding: 35px 15px;
+  background: linear-gradient(135deg, #160b35, #351078, #090711);
+  border-bottom: 2px solid #873dff;
 }
 
 .logo {
-  width: 65px;
-  height: 65px;
-  margin: auto;
-  display: grid;
-  place-items: center;
-  border-radius: 20px;
-  background: linear-gradient(135deg,#a855f7,#5b21b6);
-  font-size: 25px;
+  font-size: 30px;
+  font-weight: 900;
+  color: #c49aff;
+}
+
+.header p {
+  font-size: 20px;
   font-weight: bold;
+  margin: 8px 0;
 }
 
-h1 {
-  font-size: 25px;
-  margin: 15px 0 8px;
+.header small {
+  color: #c6b6e8;
 }
 
-.sub {
-  color: #b9abc9;
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 18px;
 }
 
-.card {
-  background: #171023;
-  border: 1px solid #39264f;
+.welcome,
+.shop,
+.summary,
+.payment {
+  background: #171323;
+  border: 1px solid #39245e;
   border-radius: 15px;
-  padding: 16px;
-  margin: 15px 0;
+  padding: 20px;
+  margin-bottom: 18px;
 }
 
-h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
+.welcome {
+  text-align: center;
+}
+
+.welcome h2 {
+  color: #c49aff;
+  margin-bottom: 8px;
+}
+
+h3 {
+  color: #c49aff;
+  margin-bottom: 16px;
 }
 
 .tabs {
   display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .tab {
-  background: #211431;
+  flex: 1;
+  padding: 12px 5px;
+  background: #241a36;
   color: white;
-  border: 1px solid #49345f;
-  padding: 10px;
-  border-radius: 10px;
+  border: 1px solid #60408e;
+  border-radius: 9px;
+  font-weight: bold;
 }
 
 .tab.active {
-  background: #8b45dc;
+  background: #7836d8;
+  border-color: #b78aff;
 }
 
 .products {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-top: 15px;
 }
 
 .product {
-  background: #211431;
-  color: white;
-  border: 1px solid #49345f;
-  border-radius: 12px;
-  padding: 13px;
+  background: #211932;
+  border: 1px solid #49316d;
+  border-radius: 10px;
+  padding: 15px 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.product strong {
+  color: #fff;
+}
+
+.product p {
+  color: #c49aff;
+  margin-top: 9px;
+  font-weight: bold;
 }
 
 .product.selected {
-  border: 2px solid #c084fc;
+  background: #452078;
+  border: 2px solid #c49aff;
 }
 
-.price {
-  color: #d7a8ff;
-  font-weight: bold;
-  margin-top: 8px;
+.summary p {
+  margin: 12px 0;
 }
 
 label {
   display: block;
-  margin: 12px 0 7px;
+  margin: 15px 0 7px;
+  color: #cdb9ed;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 13px;
-  border-radius: 10px;
-  background: #0e0a16;
+  background: #0d0a15;
+  border: 1px solid #60408e;
+  border-radius: 8px;
   color: white;
-  border: 1px solid #49345f;
+  outline: none;
 }
 
 .payment-methods {
@@ -120,47 +144,78 @@ input {
 }
 
 .payment-box {
-  background: #211431;
-  border: 1px solid #49345f;
-  border-radius: 15px;
-  padding: 15px;
+  background: #211932;
+  border: 1px solid #49316d;
+  border-radius: 12px;
+  padding: 15px 8px;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .payment-logo {
-  width: 65px;
-  height: 65px;
-  border-radius: 15px;
-  margin: auto auto 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  margin: 0 auto 10px;
   display: grid;
   place-items: center;
-  font-size: 24px;
+  font-size: 25px;
   font-weight: bold;
 }
 
 .kpay-logo {
-  background: white;
-  color: #0878d1;
+  background: #e4b900;
+  color: #111;
 }
 
 .wave-logo {
-  background: white;
-  color: #00a85a;
+  background: #00a7e9;
+  color: white;
+}
+
+.payment-box h4 {
+  margin-bottom: 8px;
+}
+
+.payment-box p {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.payment-box button {
+  background: #513080;
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 9px;
 }
 
 .submit {
   width: 100%;
-  padding: 15px;
-  border: 0;
-  border-radius: 12px;
-  background: linear-gradient(100deg,#9b5cff,#c15cff);
+  padding: 16px;
+  background: linear-gradient(90deg, #7131ce, #a34cff);
   color: white;
+  border: 0;
+  border-radius: 10px;
+  font-size: 17px;
   font-weight: bold;
-  font-size: 16px;
+  cursor: pointer;
 }
 
-@media(max-width:420px) {
+.order-status {
+  margin-top: 15px;
+  text-align: center;
+  color: #c49aff;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: #9c8eaf;
+}
+
+@media (max-width: 380px) {
   .products {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
