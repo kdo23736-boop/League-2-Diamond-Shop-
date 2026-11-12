@@ -1,112 +1,117 @@
 
 const products = {
   diamond: [
-    ["86 Diamonds",5800],
-    ["172 Diamonds",11000],
-    ["257 Diamonds",16300],
-    ["343 Diamonds",21800],
-    ["429 Diamonds",27000],
-    ["514 Diamonds",32500],
-    ["600 Diamonds",37600],
-    ["706 Diamonds",42900],
-    ["878 Diamonds",53600],
-    ["964 Diamonds",58900],
-    ["1049 Diamonds",64100],
-    ["2195 Diamonds",127500]
+    ["86 Diamonds", 5800],
+    ["172 Diamonds", 11000],
+    ["257 Diamonds", 16300],
+    ["343 Diamonds", 21800],
+    ["429 Diamonds", 27000],
+    ["514 Diamonds", 32500],
+    ["600 Diamonds", 37600],
+    ["706 Diamonds", 42900],
+    ["878 Diamonds", 53600],
+    ["964 Diamonds", 58900],
+    ["1049 Diamonds", 64100],
+    ["2195 Diamonds", 127500]
   ],
   pass: [
-    ["Weekly Pass",6900],
-    ["Twilight Pass",34500]
+    ["Weekly Pass", 6900],
+    ["Twilight Pass", 34500]
   ],
   double: [
-    ["2X 50 Diamonds",4100],
-    ["2X 150 Diamonds",11500],
-    ["2X 250 Diamonds",17200],
-    ["2X 500 Diamonds",33700]
+    ["2X50", 4100],
+    ["2X150", 11500],
+    ["2X250", 17000],
+    ["2X500", 33700]
   ]
 };
 
 let selected = null;
 
 function showProducts(type, button) {
-  document.querySelectorAll(".tab").forEach(btn =>
-    btn.classList.remove("active")
-  );
-
-  button.classList.add("active");
-  selected = null;
-
   const container = document.getElementById("products");
-  container.innerHTML = "";
 
-  products[type].forEach(item => {
-    const btn = document.createElement("button");
-    btn.className = "product";
-
-    btn.innerHTML = `
-      <b>${item[0]}</b>
-      <div class="price">
-        ${item[1].toLocaleString()} Ks
-      </div>
-    `;
-
-    btn.onclick = () => {
-      selected = item;
-
-      document.querySelectorAll(".product").forEach(p =>
-        p.classList.remove("selected")
-      );
-
-      btn.classList.add("selected");
-      updateSummary();
-    };
-
-    container.appendChild(btn);
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.remove("active");
   });
 
-  updateSummary();
+  if (button) button.classList.add("active");
+
+  container.innerHTML = "";
+
+  products[type].forEach(([name, price]) => {
+    const item = document.createElement("div");
+    item.className = "product";
+    item.innerHTML = `
+      <strong>${name}</strong>
+      <p>${price.toLocaleString()} Ks</p>
+    `;
+
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".product").forEach(p => {
+        p.classList.remove("selected");
+      });
+
+      item.classList.add("selected");
+      selected = { name, price };
+      updateSummary();
+    });
+
+    container.appendChild(item);
+  });
 }
 
 function updateSummary() {
   document.getElementById("pname").textContent =
-    selected ? selected[0] : "မရွေးရသေးပါ";
+    selected.name;
 
   document.getElementById("total").textContent =
-    selected ? selected[1].toLocaleString() + " Ks" : "0 Ks";
+    selected.price.toLocaleString() + " Ks";
 }
 
-function copyText(number) {
-  navigator.clipboard.writeText(number)
-    .then(() => alert("Copied: " + number))
-    .catch(() => alert(number));
+async function copyText(number) {
+  try {
+    await navigator.clipboard.writeText(number);
+    alert("Payment Number Copied!");
+  } catch {
+    alert("Copy မရပါ။ နံပါတ်ကို ကိုယ်တိုင် Copy လုပ်ပါ။");
+  }
 }
 
-// Order ကို Backend API ချိတ်ပြီးမှ
-// Telegram Admin ဆီ အမှန်တကယ် ပို့နိုင်ပါမယ်။
 async function order() {
   const uid = document.getElementById("uid").value.trim();
   const sid = document.getElementById("sid").value.trim();
+  const payment = document.getElementById("payment-method").value;
   const receipt = document.getElementById("receipt").files[0];
-
   const status = document.getElementById("status");
 
   if (!selected) {
-    status.textContent = "Package ရွေးချယ်ပါ။";
+    alert("Product တစ်ခုရွေးပါ။");
     return;
   }
 
   if (!uid || !sid) {
-    status.textContent = "User ID နှင့် Server ID ဖြည့်ပါ။";
+    alert("MLBB User ID နဲ့ Server ID ဖြည့်ပါ။");
+    return;
+  }
+
+  if (!payment) {
+    alert("Payment Method ရွေးပါ။");
     return;
   }
 
   if (!receipt) {
-    status.textContent = "Payment Screenshot တင်ပေးပါ။";
+    alert("ငွေလွှဲ Screenshot တင်ပါ။");
+    return;
+  }
+
+  if (!receipt.type.startsWith("image/")) {
+    alert("Image Screenshot သာ တင်နိုင်ပါသည်။");
     return;
   }
 
   status.textContent =
-    "Backend API ချိတ်ဆက်ရန် လိုအပ်ပါသည်။";
+    "Order System ချိတ်ဆက်နေဆဲဖြစ်ပါသည်။ နောက်အဆင့်တွင် ပြီးစီးအောင်လုပ်ပါမည်။";
 }
 
 showProducts("diamond", document.querySelector(".tab"));
