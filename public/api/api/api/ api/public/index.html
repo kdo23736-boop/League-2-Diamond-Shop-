@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>League 2 Diamond Shop</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">💎 LEAGUE 2</div>
+  <p>DIAMOND SHOP</p>
+  <small>Mobile Legends Diamond Service</small>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <h2>Welcome to League 2</h2>
+    <p>MLBB Diamond & Pass Shop</p>
+  </section>
+
+  <section class="shop">
+    <h3>🛒 Select Product</h3>
+
+    <div class="tabs">
+      <button class="tab active"
+        onclick="showProducts('diamond', this)">
+        Diamonds
+      </button>
+
+      <button class="tab"
+        onclick="showProducts('pass', this)">
+        Pass
+      </button>
+
+      <button class="tab"
+        onclick="showProducts('double', this)">
+        Double
+      </button>
+    </div>
+
+    <div id="products" class="products"></div>
+  </section>
+
+  <section class="summary">
+    <h3>📦 Order Details</h3>
+
+    <p>Product: <strong id="pname">မရွေးရသေးပါ</strong></p>
+    <p>Total: <strong id="total">0 Ks</strong></p>
+
+    <label for="uid">MLBB User ID</label>
+    <input id="uid" type="number"
+      placeholder="Enter User ID">
+
+    <label for="sid">Server ID</label>
+    <input id="sid" type="number"
+      placeholder="Enter Server ID">
+
+  </section>
+
+  <section class="payment">
+    <h3>💳 Payment Method</h3>
+
+    <div class="payment-methods">
+
+      <div class="payment-box">
+        <div class="payment-logo kpay-logo">K+</div>
+        <h4>KBZPay</h4>
+        <p id="kpay-number">09422190218</p>
+        <button onclick="copyText('09422190218')">
+          Copy Number
+        </button>
+      </div>
+
+      <div class="payment-box">
+        <div class="payment-logo wave-logo">W</div>
+        <h4>WavePay</h4>
+        <p id="wave-number">09893463559</p>
+        <button onclick="copyText('09893463559')">
+          Copy Number
+        </button>
+      </div>
+
+    </div>
+
+    <label for="payment-method">Choose Payment</label>
+    <select id="payment-method">
+      <option value="">Select Payment Method</option>
+      <option value="KPay">KBZPay</option>
+      <option value="WavePay">WavePay</option>
+    </select>
+
+    <label for="receipt">Upload Payment Screenshot</label>
+    <input id="receipt" type="file"
+      accept="image/*">
+
+  </section>
+
+  <button class="submit" onclick="order()">
+    Order တင်မည်
+  </button>
+
+  <div id="status" class="order-status"></div>
+
+</main>
+
+<footer>
+  <p>© 2026 LEAGUE 2 DIAMOND SHOP</p>
+  <small>Thank you for choosing League 2</small>
+</footer>
+
+<script src="/script.js"></script>
+
+</body>
+</html>
